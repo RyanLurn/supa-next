@@ -9,7 +9,10 @@
     "format": "biome format --write",
     "lint": "biome lint --write",
     "check": "biome check --write",
-    "type-check": "next typegen && tsc --noEmit"
+    "type-check": "next typegen && tsc --noEmit",
+    "auth:generate": "pnpm dlx @better-auth/cli generate --output ./src/db/schema/identity.ts --config ./src/domains/identity/lib/auth.ts",
+    "db:generate": "drizzle-kit generate --config ./src/db/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config ./src/db/drizzle.config.ts"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.16",
