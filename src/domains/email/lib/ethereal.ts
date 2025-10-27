@@ -1,7 +1,14 @@
 import "server-only";
 import { createTestAccount, createTransport } from "nodemailer";
 
+let cachedTransporter: Awaited<ReturnType<typeof createTransport>> | null =
+  null;
+
 async function createEtherealTransport() {
+  if (cachedTransporter) {
+    return cachedTransporter;
+  }
+
   const testAccount = await createTestAccount();
   const transporter = createTransport({
     auth: {
@@ -13,7 +20,8 @@ async function createEtherealTransport() {
     port: 587,
   });
 
-  return transporter;
+  cachedTransporter = transporter;
+  return cachedTransporter;
 }
 
 export { createEtherealTransport };
