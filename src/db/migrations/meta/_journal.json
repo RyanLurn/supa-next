@@ -15,6 +15,13 @@
       "when": 1761539678853,
       "tag": "0001_reflective_cable",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761572636799,
+      "tag": "0002_breezy_natasha_romanoff",
+      "breakpoints": true
     }
   ]
 }
