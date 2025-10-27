@@ -7,6 +7,7 @@ const serverEnvVars = createEnv({
     DATABASE_SESSION_POOLER_CONNECTION_STRING: z.string().min(1),
     BETTER_AUTH_SECRET: z.string().min(1),
     BETTER_AUTH_URL: z.url(),
+    RESEND_API_KEY: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });
