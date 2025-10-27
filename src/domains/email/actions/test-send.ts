@@ -1,10 +1,11 @@
 "use server";
 
 import { sendEmail } from "@/domains/email/lib/send";
-import { testEmail } from "@/domains/email/lib/test-email";
+import { getTestEmail } from "@/domains/email/lib/test-email";
 
 async function sendTestEmail() {
   try {
+    const testEmail = await getTestEmail();
     await sendEmail(testEmail);
     console.log("Test email sent successfully");
   } catch (error) {
