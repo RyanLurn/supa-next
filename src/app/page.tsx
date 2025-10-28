@@ -7,10 +7,10 @@ import { sendTestEmail } from "@/domains/email/actions/test-send";
 export default function Home() {
   const [state, action, isPending] = useActionState(
     async (_prevState) => {
-      const res = await sendTestEmail();
-      return res;
+      const result = await sendTestEmail();
+      return result;
     },
-    { success: false, message: "" }
+    { success: false, message: "" } // ?
   );
 
   const handleClick = () => {

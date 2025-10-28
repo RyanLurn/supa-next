@@ -16,17 +16,16 @@ async function sendTestEmail() {
     };
   }
 
-  try {
-    await kv.set(key, "locked", { ex: 30 });
+  await kv.set(key, "locked", { ex: 30 });
 
-    const testEmail = await getTestEmail();
-    await sendEmail(testEmail);
+  const testEmail = await getTestEmail();
+  const sendEmailResult = await sendEmail(testEmail);
 
-    return { success: true, message: "Test email sent successfully!" };
-  } catch (error) {
-    console.error("Failed to send test email:", error);
+  if (sendEmailResult.isErr()) {
     return { success: false, message: "Failed to send test email." };
   }
+
+  return { success: true, message: "Test email sent successfully!" };
 }
 
 export { sendTestEmail };
