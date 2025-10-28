@@ -1,0 +1,48 @@
+name: Code quality check
+
+on:
+  push:
+    branches: [main, setup]
+    paths-ignore:
+      - ".gitignore"
+      - ".gitattributes"
+      - ".env.example"
+      - "**/*.md"
+  pull_request:
+    branches: [main, setup]
+    paths-ignore:
+      - ".gitignore"
+      - ".gitattributes"
+      - ".env.example"
+      - "**/*.md"
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+
+    name: Run checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies with pnpm
+        run: pnpm install
+
+      - name: Run Biome
+        run: pnpm exec biome check
+      
+      - name: Run type checking
+        run: pnpm run type-check
+        
