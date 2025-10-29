@@ -15,6 +15,7 @@ function ContinueWithGoogle() {
     const { error } = await authClient.signIn.social({
       provider: "google",
       callbackURL: "/protected",
+      errorCallbackURL: "/google-error",
     });
     if (error) {
       setErrorMessage(error.message ?? "Unable to continue with Google");
