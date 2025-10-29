@@ -1,3 +1,6 @@
+// Translated to React and Tailwind from Google's generated HTML and CSS button to fit their brand guidelines
+// Don't use shadcn/ui button here
+
 import type React from "react";
 
 type GoogleSignInButtonProps = React.ComponentProps<"button"> & {
