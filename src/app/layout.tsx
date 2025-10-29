@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          {children}
+          <div className="h-dvh">{children}</div>
           <ModeToggle className="fixed top-3 right-3 z-50" />
         </Providers>
       </body>
