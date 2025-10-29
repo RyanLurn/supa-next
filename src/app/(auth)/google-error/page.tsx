@@ -26,7 +26,7 @@ export default async function GoogleErrorPage({
       <p className="text-center">
         Please try again later or contact support if the problem persists.
       </p>
-      <Link href="/sign-in" className="text-underline">
+      <Link href="/sign-in" className="underline">
         Back to sign in
       </Link>
     </div>
