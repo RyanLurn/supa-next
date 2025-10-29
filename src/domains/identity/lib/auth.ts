@@ -26,6 +26,12 @@ const auth = betterAuth({
       await kv.del(key);
     },
   },
+  socialProviders: {
+    google: {
+      clientId: serverEnvVars.GOOGLE_CLIENT_ID,
+      clientSecret: serverEnvVars.GOOGLE_CLIENT_SECRET,
+    },
+  },
 });
 
 export { auth };
