@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SignOutOption } from "@/domains/identity/account/components/button/sign-out";
-import { UserAvatar } from "@/domains/identity/account/components/button/user-avatar";
 import { AccountPanel } from "@/domains/identity/account/components/panel/account-panel";
+import { UserAvatar } from "@/domains/identity/account/components/ui/user-avatar";
 import { authClient } from "@/domains/identity/lib/auth-client";
 
 function UserButton({ className }: { className?: string }) {
@@ -24,7 +24,7 @@ function UserButton({ className }: { className?: string }) {
     <Dialog>
       <DropdownMenu>
         <DropdownMenuTrigger className={className}>
-          <UserAvatar src={data.user.image ?? undefined} />
+          <UserAvatar className="size-9" image={data.user.image} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{data.user.name}</DropdownMenuLabel>

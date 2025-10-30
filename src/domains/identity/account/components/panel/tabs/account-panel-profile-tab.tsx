@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserAvatar } from "@/domains/identity/account/components/button/user-avatar";
 import { AccountPanelTab } from "@/domains/identity/account/components/ui/account-panel-tab";
+import { UserAvatar } from "@/domains/identity/account/components/ui/user-avatar";
 import { authClient } from "@/domains/identity/lib/auth-client";
 
 function AccountPanelProfileTab() {
@@ -12,10 +12,7 @@ function AccountPanelProfileTab() {
         <div className="flex flex-1 items-center gap-x-2">
           {data ? (
             <>
-              <UserAvatar
-                className="size-12"
-                src={data.user.image ?? undefined}
-              />
+              <UserAvatar className="size-12" image={data.user.image} />
               <p>{data.user.name}</p>
             </>
           ) : (
