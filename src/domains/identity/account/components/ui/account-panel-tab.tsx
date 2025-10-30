@@ -1,14 +1,13 @@
 import { Separator } from "@/components/ui/separator";
-import type { AccountPanelTabType } from "@/domains/identity/account/types";
 import { cn } from "@/lib/utils";
 
 type AccountPanelTabProps = {
-  tab: AccountPanelTabType;
+  title: string;
   children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 function AccountPanelTab({
-  tab,
+  title,
   children,
   className,
   ...props
@@ -22,7 +21,7 @@ function AccountPanelTab({
       {...props}
     >
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        {tab}
+        {title}
       </h2>
       <Separator className="my-2" />
       {children}
