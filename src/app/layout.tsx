@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import { Providers } from "@/components/providers";
-import { ModeToggle } from "@/components/utils/mode-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +30,6 @@ export default function RootLayout({
       >
         <Providers>
           <div className="h-dvh">{children}</div>
-          <ModeToggle className="fixed top-3 right-3 z-50" />
         </Providers>
       </body>
     </html>
