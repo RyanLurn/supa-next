@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { UserButton } from "@/domains/identity/account/components/user-button";
+import { UserButton } from "@/domains/identity/account/components/button/user-button";
 import { auth } from "@/domains/identity/lib/auth";
 
 export default async function ProtectedPage() {
