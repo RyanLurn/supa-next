@@ -1,4 +1,4 @@
-import { CircleUser, Settings2, ShieldCheck } from "lucide-react";
+import { CircleUser, Settings2 } from "lucide-react";
 import { PanelSidebarItem } from "@/domains/identity/account/components/ui/account-panel-sidebar-item";
 import type { AccountPanelTabType } from "@/domains/identity/account/types";
 
@@ -14,12 +14,6 @@ function AccountPanelSidebarItems({
       <PanelSidebarItem
         tab="Profile"
         icon={<CircleUser />}
-        activeTab={activeTab}
-        switchTab={switchTab}
-      />
-      <PanelSidebarItem
-        tab="Security"
-        icon={<ShieldCheck />}
         activeTab={activeTab}
         switchTab={switchTab}
       />

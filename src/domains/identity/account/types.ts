@@ -1,3 +1,3 @@
-type AccountPanelTabType = "Profile" | "Security" | "Preferences";
+type AccountPanelTabType = "Profile" | "Preferences";
 
 export type { AccountPanelTabType };
