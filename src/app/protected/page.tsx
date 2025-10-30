@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { UserButton } from "@/domains/identity/account/components/button/user-button";
 import { auth } from "@/domains/identity/lib/auth";
 
 export default async function ProtectedPage() {
@@ -16,6 +17,7 @@ export default async function ProtectedPage() {
   return (
     <div>
       <h1>Welcome {session.user.name}</h1>
+      <UserButton className="fixed top-4 right-4 z-50" />
     </div>
   );
 }
