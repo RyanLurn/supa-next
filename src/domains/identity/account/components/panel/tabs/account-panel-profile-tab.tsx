@@ -9,7 +9,7 @@ function AccountPanelProfileTab() {
   return (
     <AccountPanelTab title="Profile details">
       <div className="flex w-full items-center">
-        <h3 className="text-md w-1/3 text-left font-semibold">Profile</h3>
+        <h3 className="w-1/3 text-left font-semibold">Profile</h3>
         <div className="flex flex-1 items-center gap-x-2">
           {data ? (
             <>
@@ -26,7 +26,7 @@ function AccountPanelProfileTab() {
       </div>
       <Separator className="my-2" />
       <div className="flex w-full items-center">
-        <h3 className="text-md w-1/3 text-left font-semibold">Email address</h3>
+        <h3 className="w-1/3 text-left font-semibold">Email address</h3>
         <div className="flex flex-1 items-center gap-x-2">
           {data ? <p>{data.user.email}</p> : <Skeleton className="h-5 w-25" />}
         </div>

@@ -5,7 +5,7 @@ function AccountPanelPreferencesTab() {
   return (
     <AccountPanelTab title="Preferences">
       <div className="flex w-full items-center justify-between">
-        <h3 className="text-md w-1/3 text-left font-semibold">Theme</h3>
+        <h3 className="w-1/3 text-left font-semibold">Theme</h3>
         <AccountModeToggle className="min-w-32 justify-start" />
       </div>
     </AccountPanelTab>
