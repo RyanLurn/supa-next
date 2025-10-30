@@ -1,5 +1,5 @@
 import { CircleUser, Settings2, ShieldCheck } from "lucide-react";
-import { PanelSidebarItem } from "@/domains/identity/account/components/ui/panel-sidebar-item";
+import { PanelSidebarItem } from "@/domains/identity/account/components/ui/account-panel-sidebar-item";
 import type { AccountPanelTabType } from "@/domains/identity/account/types";
 
 function AccountPanelSidebarItems({
