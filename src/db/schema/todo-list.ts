@@ -4,8 +4,7 @@ import { userId } from "@/db/helpers/user-id";
 
 const tasks = pgTable("tasks", {
   id: text("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description"),
+  name: text("name").notNull(),
   completed: boolean("completed").default(false).notNull(),
   userId,
   ...timestamps,
