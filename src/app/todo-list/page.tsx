@@ -1,20 +1,18 @@
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { UserButton } from "@/domains/identity/account/components/button/user-button";
-import { auth } from "@/domains/identity/lib/auth";
+import { getUser } from "@/domains/identity/helpers/get-user";
 
 export default async function TodoListPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const authResult = await getUser();
 
-  if (!session?.user) {
-    redirect("/");
+  if (authResult.isErr()) {
+    throw new Error(authResult.error.message);
   }
+
+  const user = authResult.value;
 
   return (
     <div>
-      <h1>Welcome {session.user.name}</h1>
+      <h1>Welcome {user.name}</h1>
       <UserButton className="fixed top-4 right-4 z-50" />
     </div>
   );
