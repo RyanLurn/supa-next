@@ -1,11 +1,9 @@
-// Mock page to test authentication
-
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { UserButton } from "@/domains/identity/account/components/button/user-button";
 import { auth } from "@/domains/identity/lib/auth";
 
-export default async function ProtectedPage() {
+export default async function TodoListPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
