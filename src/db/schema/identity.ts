@@ -2,8 +2,9 @@
 
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { timestamps } from "@/db/helpers/timestamps";
+import { userId } from "@/db/helpers/user-id";
 
-export const users = pgTable("users", {
+const users = pgTable("users", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -12,25 +13,21 @@ export const users = pgTable("users", {
   ...timestamps,
 });
 
-export const sessions = pgTable("sessions", {
+const sessions = pgTable("sessions", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   token: text("token").notNull().unique(),
   ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+  userId,
   ...timestamps,
 });
 
-export const accounts = pgTable("accounts", {
+const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
   providerId: text("provider_id").notNull(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+  userId,
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   idToken: text("id_token"),
@@ -45,10 +42,12 @@ export const accounts = pgTable("accounts", {
   ...timestamps,
 });
 
-export const verifications = pgTable("verifications", {
+const verifications = pgTable("verifications", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   ...timestamps,
 });
+
+export { users, sessions, accounts, verifications };

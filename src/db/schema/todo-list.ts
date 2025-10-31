@@ -1,0 +1,14 @@
+import { boolean, pgTable, text } from "drizzle-orm/pg-core";
+import { timestamps } from "@/db/helpers/timestamps";
+import { userId } from "@/db/helpers/user-id";
+
+const tasks = pgTable("tasks", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  completed: boolean("completed").default(false).notNull(),
+  userId,
+  ...timestamps,
+});
+
+export { tasks };
