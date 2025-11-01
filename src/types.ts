@@ -10,4 +10,19 @@ type ValidationError<T> = {
   error: ZodError<T>;
 };
 
-export type { UnexpectedError, ValidationError };
+type EmptySelectError = {
+  kind: "empty-select";
+  message: string;
+};
+
+type UnauthorizedError = {
+  kind: "unauthorized";
+  message: string;
+};
+
+export type {
+  UnexpectedError,
+  ValidationError,
+  EmptySelectError,
+  UnauthorizedError,
+};

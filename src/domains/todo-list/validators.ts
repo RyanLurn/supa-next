@@ -7,4 +7,8 @@ const createTaskActionInputSchema = z.object({
     .max(100, "Task name is too long."),
 });
 
-export { createTaskActionInputSchema };
+const completeTaskActionInputSchema = z.object({
+  taskId: z.uuid({ version: "v4" }),
+});
+
+export { createTaskActionInputSchema, completeTaskActionInputSchema };
