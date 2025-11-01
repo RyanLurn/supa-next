@@ -9,7 +9,7 @@ import { getUser } from "@/domains/identity/helpers/get-user";
 import { accessTask } from "@/domains/todo-list/helpers/access-task";
 import { taskIdSchema } from "@/domains/todo-list/validators";
 
-async function completeTask(
+async function deleteTask(
   _prevState: { errors: Array<{ message: string }> },
   payload: FormData
 ) {
@@ -41,21 +41,18 @@ async function completeTask(
   const task = taskAccessResult.value;
 
   try {
-    await db
-      .update(tasks)
-      .set({ completed: true })
-      .where(eq(tasks.id, task.id));
+    await db.delete(tasks).where(eq(tasks.id, task.id));
 
     revalidatePath("/todo-list");
 
     return { errors: [] };
   } catch (error) {
     console.error(
-      `Failed to mark task with id "${task.id}" as completed. Unexpected error occurred:`,
+      `Failed to delete task with id "${task.id}". Unexpected error occurred:`,
       error
     );
-    return { errors: [{ message: "Failed to mark task as completed." }] };
+    return { errors: [{ message: "Failed to delete task." }] };
   }
 }
 
-export { completeTask };
+export { deleteTask };
