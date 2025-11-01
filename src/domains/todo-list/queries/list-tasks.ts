@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { err, ok, type Result } from "neverthrow";
 import { db } from "@/db/connect";
 import { tasks } from "@/db/schema/todo-list";
@@ -12,7 +12,8 @@ async function listTasks(
     const tasksList = await db
       .select()
       .from(tasks)
-      .where(and(eq(tasks.userId, userId), eq(tasks.completed, false)));
+      .where(and(eq(tasks.userId, userId), eq(tasks.completed, false)))
+      .orderBy(desc(tasks.updatedAt));
 
     return ok(tasksList);
   } catch (error) {

@@ -14,7 +14,7 @@ function CompletedTaskItem({ id, title }: { id: string; title: string }) {
   return (
     <form
       action={action}
-      className="flex w-full items-center justify-between gap-x-2 rounded-md border border-border pl-4 pr-2 py-2"
+      className="flex w-full items-center justify-between gap-x-2 rounded-md border border-border pl-3 pr-1 py-1"
     >
       <input type="hidden" name="id" value={id} />
       <div className="flex flex-col flex-1 gap-y-2">
