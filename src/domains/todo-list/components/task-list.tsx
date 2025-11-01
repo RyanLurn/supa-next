@@ -1,23 +1,29 @@
-import { CompletedTaskItem } from "@/domains/todo-list/components/completed-task-item";
+import { AlertCircleIcon } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { TaskItem } from "@/domains/todo-list/components/task-item";
-import type { SelectTask } from "@/domains/todo-list/types";
+import { listTasks } from "@/domains/todo-list/queries/list-tasks";
 
-function TaskList({
-  tasks,
-  completedTasks,
-}: {
-  tasks: SelectTask[];
-  completedTasks: SelectTask[];
-}) {
+async function TaskList({ userId }: { userId: string }) {
+  const listTasksResult = await listTasks(userId);
+
+  if (listTasksResult.isErr()) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircleIcon />
+        <AlertTitle>Something went wrong</AlertTitle>
+        <AlertDescription>{listTasksResult.error.message}</AlertDescription>
+      </Alert>
+    );
+  }
+
+  const tasks = listTasksResult.value;
+
   return (
-    <div className="flex flex-col gap-y-4 w-full">
+    <>
       {tasks.map((task) => (
         <TaskItem key={task.id} id={task.id} title={task.name} />
       ))}
-      {completedTasks.map((task) => (
-        <CompletedTaskItem key={task.id} id={task.id} title={task.name} />
-      ))}
-    </div>
+    </>
   );
 }
 

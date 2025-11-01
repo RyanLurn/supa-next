@@ -1,9 +1,8 @@
 import { UserButton } from "@/domains/identity/account/components/button/user-button";
 import { getUser } from "@/domains/identity/helpers/get-user";
+import { CompletedTaskList } from "@/domains/todo-list/components/completed-task-list";
 import { NewTaskForm } from "@/domains/todo-list/components/new-task-form";
 import { TaskList } from "@/domains/todo-list/components/task-list";
-import { listCompletedTasks } from "@/domains/todo-list/queries/list-completed-tasks";
-import { listTasks } from "@/domains/todo-list/queries/list-tasks";
 
 export default async function TodoListPage() {
   const authResult = await getUser();
@@ -12,24 +11,15 @@ export default async function TodoListPage() {
   }
   const user = authResult.value;
 
-  const tasksListResult = await listTasks(user.id);
-  if (tasksListResult.isErr()) {
-    throw new Error(tasksListResult.error.message);
-  }
-  const tasksList = tasksListResult.value;
-
-  const completedTasksListResult = await listCompletedTasks(user.id);
-  if (completedTasksListResult.isErr()) {
-    throw new Error(completedTasksListResult.error.message);
-  }
-  const completedTasksList = completedTasksListResult.value;
-
   return (
     <div className="size-full flex flex-col items-center max-w-md mx-auto gap-y-4">
       <UserButton className="fixed top-4 right-4 z-50" />
       <h1 className="text-2xl font-bold mt-12">Your tasks</h1>
       <NewTaskForm />
-      <TaskList tasks={tasksList} completedTasks={completedTasksList} />
+      <div className="flex flex-col gap-y-4 w-full">
+        <TaskList userId={user.id} />
+        <CompletedTaskList userId={user.id} />
+      </div>
     </div>
   );
 }
