@@ -2,6 +2,7 @@ import { UserButton } from "@/domains/identity/account/components/button/user-bu
 import { getUser } from "@/domains/identity/helpers/get-user";
 import { NewTaskForm } from "@/domains/todo-list/components/new-task-form";
 import { TaskList } from "@/domains/todo-list/components/task-list";
+import { listCompletedTasks } from "@/domains/todo-list/queries/list-completed-tasks";
 import { listTasks } from "@/domains/todo-list/queries/list-tasks";
 
 export default async function TodoListPage() {
@@ -17,12 +18,18 @@ export default async function TodoListPage() {
   }
   const tasksList = tasksListResult.value;
 
+  const completedTasksListResult = await listCompletedTasks(user.id);
+  if (completedTasksListResult.isErr()) {
+    throw new Error(completedTasksListResult.error.message);
+  }
+  const completedTasksList = completedTasksListResult.value;
+
   return (
     <div className="size-full flex flex-col items-center max-w-md mx-auto gap-y-4">
       <UserButton className="fixed top-4 right-4 z-50" />
       <h1 className="text-2xl font-bold mt-12">Your tasks</h1>
       <NewTaskForm />
-      <TaskList tasks={tasksList} />
+      <TaskList tasks={tasksList} completedTasks={completedTasksList} />
     </div>
   );
 }
