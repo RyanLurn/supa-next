@@ -1,18 +1,19 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import * as z from "zod";
 import { db } from "@/db/connect";
 import { tasks } from "@/db/schema/todo-list";
 import { getUser } from "@/domains/identity/helpers/get-user";
 import { createTaskActionInputSchema } from "@/domains/todo-list/validators";
 
 async function createTask(
-  _prevState: { success: boolean; message: string },
+  _prevState: { errors: Array<{ message: string }> },
   payload: FormData
 ) {
   const authResult = await getUser();
   if (authResult.isErr()) {
-    return { success: false, message: authResult.error.message };
+    return { errors: [{ message: authResult.error.message }] };
   }
   const user = authResult.value;
 
@@ -21,10 +22,12 @@ async function createTask(
     name: nameEntryValue,
   });
   if (validationResult.error) {
+    console.warn(z.prettifyError(validationResult.error));
+    const errors = validationResult.error.issues.map((issue) => ({
+      message: issue.message,
+    }));
     return {
-      success: false,
-      message: "Invalid input",
-      errors: validationResult.error.issues,
+      errors,
     };
   }
 
@@ -35,10 +38,10 @@ async function createTask(
 
     revalidatePath("/todo-list");
 
-    return { success: true, message: "Task created successfully." };
+    return { errors: [] };
   } catch (error) {
     console.error("Failed to create task. Unexpected error occurred:", error);
-    return { success: false, message: "Failed to create task." };
+    return { errors: [{ message: "Failed to create task." }] };
   }
 }
 

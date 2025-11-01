@@ -5,13 +5,13 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { createTask } from "@/domains/todo-list/actions/create-task";
 import { cn } from "@/lib/utils";
 
 function NewTaskForm({ className }: { className?: string }) {
   const [state, action, isPending] = useActionState(createTask, {
-    success: false,
-    message: "",
+    errors: [],
   });
 
   return (
@@ -20,8 +20,8 @@ function NewTaskForm({ className }: { className?: string }) {
       className={cn("flex gap-2 items-center w-full", className)}
     >
       <Field className="flex-1">
-        <Input name="name" required />
-        {state.errors && <FieldError errors={state.errors} />}
+        <Input name="name" disabled={isPending} required />
+        {state.errors.length > 0 && <FieldError errors={state.errors} />}
       </Field>
       <Button
         className="self-start"
@@ -29,7 +29,7 @@ function NewTaskForm({ className }: { className?: string }) {
         size="icon"
         disabled={isPending}
       >
-        <Plus />
+        {isPending ? <Spinner /> : <Plus />}
       </Button>
     </form>
   );
