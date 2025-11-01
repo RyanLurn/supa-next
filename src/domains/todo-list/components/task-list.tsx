@@ -5,7 +5,7 @@ function TaskList({ tasks }: { tasks: SelectTask[] }) {
   return (
     <div className="flex flex-col gap-y-4 w-full">
       {tasks.map((task) => (
-        <TaskItem key={task.id} title={task.name} completed={task.completed} />
+        <TaskItem key={task.id} id={task.id} title={task.name} />
       ))}
     </div>
   );

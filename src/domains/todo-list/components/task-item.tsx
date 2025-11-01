@@ -1,19 +1,30 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Check } from "lucide-react";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+import { FieldError } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
+import { completeTask } from "@/domains/todo-list/actions/complete-task";
 
-function TaskItem({ title, completed }: { title: string; completed: boolean }) {
+function TaskItem({ id, title }: { id: string; title: string }) {
+  const [state, action, isPending] = useActionState(completeTask, {
+    errors: [],
+  });
   return (
-    <div className="flex w-full items-center justify-between gap-x-2 rounded-md border border-border pl-4 pr-2 py-2">
-      <Checkbox defaultChecked={completed} />
-      <p className={cn("flex-1", completed && "line-through")}>{title}</p>
-      <Button variant="ghost" size="icon">
-        <X />
+    <form
+      action={action}
+      className="flex w-full items-center justify-between gap-x-2 rounded-md border border-border pl-4 pr-2 py-2"
+    >
+      <input type="hidden" name="id" value={id} />
+      <div className="flex flex-col flex-1 gap-y-2">
+        <p>{title}</p>
+        {state.errors.length > 0 && <FieldError errors={state.errors} />}
+      </div>
+      <Button type="submit" variant="ghost" size="icon" disabled={isPending}>
+        {isPending ? <Spinner /> : <Check />}
       </Button>
-    </div>
+    </form>
   );
 }
 

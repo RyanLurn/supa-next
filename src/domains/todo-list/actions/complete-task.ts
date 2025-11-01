@@ -19,7 +19,7 @@ async function completeTask(
   }
   const user = authResult.value;
 
-  const taskIdEntryValue = payload.get("task-id");
+  const taskIdEntryValue = payload.get("id");
   const validationResult = completeTaskActionInputSchema.safeParse({
     taskId: taskIdEntryValue,
   });
