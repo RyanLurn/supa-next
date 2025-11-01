@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import * as z from "zod";
 import { db } from "@/db/connect";
 import { tasks } from "@/db/schema/todo-list";
 import { getUser } from "@/domains/identity/helpers/get-user";
@@ -22,8 +21,11 @@ async function createTask(
     name: nameEntryValue,
   });
   if (validationResult.error) {
-    const errorMessage = z.prettifyError(validationResult.error);
-    return { success: false, message: errorMessage };
+    return {
+      success: false,
+      message: "Invalid input",
+      errors: validationResult.error.issues,
+    };
   }
 
   try {
