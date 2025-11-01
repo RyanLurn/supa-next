@@ -1,33 +1,29 @@
 "use server";
 
-import { err, ok, type Result } from "neverthrow";
+import { revalidatePath } from "next/cache";
+import * as z from "zod";
 import { db } from "@/db/connect";
 import { tasks } from "@/db/schema/todo-list";
 import { getUser } from "@/domains/identity/helpers/get-user";
-import type { CreateTaskActionInput } from "@/domains/todo-list/types";
 import { createTaskActionInputSchema } from "@/domains/todo-list/validators";
-import type { UnexpectedError, ValidationError } from "@/types";
 
 async function createTask(
-  formData: FormData
-): Promise<
-  Result<void, UnexpectedError | ValidationError<CreateTaskActionInput>>
-> {
+  _prevState: { success: boolean; message: string },
+  payload: FormData
+) {
   const authResult = await getUser();
   if (authResult.isErr()) {
-    return err(authResult.error);
+    return { success: false, message: authResult.error.message };
   }
   const user = authResult.value;
 
-  const nameEntryValue = formData.get("name");
+  const nameEntryValue = payload.get("name");
   const validationResult = createTaskActionInputSchema.safeParse({
     name: nameEntryValue,
   });
   if (validationResult.error) {
-    return err({
-      kind: "validation",
-      error: validationResult.error,
-    });
+    const errorMessage = z.prettifyError(validationResult.error);
+    return { success: false, message: errorMessage };
   }
 
   try {
@@ -35,13 +31,12 @@ async function createTask(
       .insert(tasks)
       .values({ name: validationResult.data.name, userId: user.id });
 
-    return ok(undefined);
+    revalidatePath("/todo-list");
+
+    return { success: true, message: "Task created successfully." };
   } catch (error) {
     console.error("Failed to create task. Unexpected error occurred:", error);
-    return err({
-      kind: "unexpected",
-      message: "Failed to create task.",
-    });
+    return { success: false, message: "Failed to create task." };
   }
 }
 
