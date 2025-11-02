@@ -25,7 +25,7 @@ async function createTask(
   const validationResult = createTaskActionInputSchema.safeParse({
     name: nameEntryValue,
   });
-  if (validationResult.error) {
+  if (!validationResult.success) {
     console.warn(z.prettifyError(validationResult.error));
     const errors = validationResult.error.issues.map((issue) => ({
       message: issue.message,
