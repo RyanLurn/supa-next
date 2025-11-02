@@ -15,6 +15,11 @@ type EmptySelectError = {
   message: string;
 };
 
+type UnauthenticatedError = {
+  kind: "unauthenticated";
+  message: string;
+};
+
 type UnauthorizedError = {
   kind: "unauthorized";
   message: string;
@@ -24,5 +29,6 @@ export type {
   UnexpectedError,
   ValidationError,
   EmptySelectError,
+  UnauthenticatedError,
   UnauthorizedError,
 };

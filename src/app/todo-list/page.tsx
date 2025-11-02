@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { UserButton } from "@/domains/identity/account/components/button/user-button";
 import { getUser } from "@/domains/identity/helpers/get-user";
 import { CompletedTaskList } from "@/domains/todo-list/components/completed-task-list";
@@ -7,6 +8,9 @@ import { TaskList } from "@/domains/todo-list/components/task-list";
 export default async function TodoListPage() {
   const authResult = await getUser();
   if (authResult.isErr()) {
+    if (authResult.error.kind === "unauthenticated") {
+      redirect("/sign-in");
+    }
     throw new Error(authResult.error.message);
   }
   const user = authResult.value;

@@ -2,6 +2,7 @@
 
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import * as z from "zod";
 import { db } from "@/db/connect";
 import { tasks } from "@/db/schema/todo-list";
@@ -15,6 +16,9 @@ async function deleteTask(
 ) {
   const authResult = await getUser();
   if (authResult.isErr()) {
+    if (authResult.error.kind === "unauthenticated") {
+      redirect("/sign-in");
+    }
     return { errors: [{ message: authResult.error.message }] };
   }
   const user = authResult.value;

@@ -1,20 +1,24 @@
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { auth } from "@/domains/identity/lib/auth";
 import "server-only";
 import type { User } from "better-auth";
 import { err, ok, type Result } from "neverthrow";
-import type { UnexpectedError } from "@/types";
+import type { UnauthenticatedError, UnexpectedError } from "@/types";
 
-async function getUser(): Promise<Result<User, UnexpectedError>> {
+async function getUser(): Promise<
+  Result<User, UnauthenticatedError | UnexpectedError>
+> {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
 
     if (!session) {
-      console.warn("User is not authenticated. Redirecting to sign-in page.");
-      redirect("/sign-in");
+      console.warn("User is not authenticated.");
+      return err({
+        kind: "unauthenticated",
+        message: "Not authenticated.",
+      });
     }
 
     return ok(session.user);
