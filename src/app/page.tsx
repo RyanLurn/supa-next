@@ -11,7 +11,7 @@ export default function Home() {
       const result = await sendTestEmail();
       return result;
     },
-    { success: false, message: "" } // ?
+    { success: false, message: "" }
   );
 
   const handleClick = () => {
